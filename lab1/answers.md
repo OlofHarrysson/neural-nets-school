@@ -1,4 +1,7 @@
 1.
+Because the input layer is of dimension 2, a hyperplane dimension of 1, e.i. a line, must be able to separate the two classes for the problem to be solvable.
+
+If you disregard the activation functions - the output from a hidden layer with one node is similar to a hyperplane, Wx + b. If that output would be 0, that point would be on the hyperplane. If it's below or above, that can be attributed to the different classes respectively.
 
 2.
 Accuracy train: 0.85, Loss: 0.326795876026
@@ -19,7 +22,7 @@ Measuring accuracy.
 7 -> 0.819
 
 5.
-3 hidden nodes = 3 hyper planes. I datan räcker inte 2st för det kan inte stänga in "circulär" data. Kolla föreläsningar och ändra
+Since the data is circular, more hyperplanes are needed to "entrap" the inner data. 
 
 6.
 train
@@ -41,15 +44,6 @@ CorrCoeff   0.804978441342
 val
 MSE   0.444009891152
 CorrCoeff   0.726105415025
-
-n=5
-train
-MSE   0.213102883101
-CorrCoeff   0.889874165685
-
-val
-MSE   0.399443507195
-CorrCoeff   0.789555492163
 
 n=6
 train
@@ -78,7 +72,11 @@ val
 MSE   0.483174244314
 CorrCoeff   0.773358744271
 
-To check overfitting - compare the train error with the val error. Val error is much larger in overfitting. Also compare the actual value for error on validation depending on hidden nodes. Since some random is introduced, a low corr will also increase train
+If the validation error is much larger than the training error the model is probably overtrained. Since the method is not deterministic, the correlation coefficient affects the result. A high coefficient can mask an overtrained network.
+
+It's also useful to see if the valitation error converges in a graph.
+
+With these points in mind - when the hidden nodes = 7 is when the network starts to overtrain.
 
 8.
 n=10, lambd=0
@@ -117,30 +115,32 @@ val
 MSE   0.486878412962
 CorrCoeff   0.73821180227
 
-
-n=15, lambd=0.1
+n=8 lambd=0.005
 train
-MSE   0.39523473978
-CorrCoeff   0.797357325847
+MSE   0.225041157007
+CorrCoeff   0.892743254537
 
 val
-MSE   0.429091866314
-CorrCoeff   0.779225370515
+MSE   0.370325966924
+CorrCoeff   0.812985531054
 
-n=20, lambd=0.1
+n=8 lambd=0.015
 train
-MSE   0.396730303764
-CorrCoeff   0.796845147765
+MSE   0.247402140498
+CorrCoeff   0.888256071109
 
 val
-MSE   0.430193583667
-CorrCoeff   0.778641418022
+MSE   0.372409692407
+CorrCoeff   0.820726106524
 
-n=20, lambd=0.15
-train
-MSE   0.406405735016
-CorrCoeff   0.794338948992
+Conclusion - 8 hidden nodes with lambda set to 0.015 were the best parameters I found
 
-val
-MSE   0.439054368436
-CorrCoeff   0.776216242449
+9.
+Finding the right parameters for a neural network often seems like it's more of an art than a science. Even so, there exist some techniques to evaluate your network to find what's wrong with it. First of all, know your data.
+
+To spot overtraining, compare the validation error with the training error to see if there is a large discrepancy. If there is, add a regularizer.
+
+Often a larger network will overtrain and is in need of a regularizer.
+
+10.
+
