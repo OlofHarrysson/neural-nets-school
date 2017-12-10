@@ -1,0 +1,102 @@
+1.
+test accuracy
+0.991
+0.987
+0.987
+0.99
+0.988
+0.965
+0.984
+0.969
+0.989
+0.991
+
+avg = 0.9841
+#params = 4,149
+
+2.
+I interpreteded the question to make the network smaller as minimizing the number of parameters whilst keeping accuracy. One could also argue that a smaller networks means fewer layers or quicker training time.
+
+model = Sequential([
+    Conv2D(8, kernel_size=(9, 9),
+           activation='relu',input_shape=input_shape),
+    MaxPooling2D(pool_size=(3, 3)),
+    Conv2D(2, kernel_size=(3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Flatten(),
+    Dense(2, activation='relu'),
+    Dense(1),
+    Activation('sigmoid')
+])
+
+test accuracy
+0.984
+0.99
+0.995
+0.801
+0.993
+0.991
+0.991
+0.956
+0.987
+0.979
+
+avg = 0.9667
+#params = 1,063
+
+3.
+A CNN layer pretty much has the filters convolve over the image. Each filter produces a heatmap of the activation. This heatmap says where and how much the filter "reacted" with the image.
+
+The rectangles have clear edges in the vertical and horizontal position as well as corners. Filters that can detetect these features do a good job on finding rectangles.
+
+Similarly, filters that has rounded edges can find circles.
+
+The filters can also work by NOT finding something. Say you have a filter that does a good job on finding corners. If you don't find any, that means in our case that it isn't a triangle hence it has to be a circle.
+
+4.
+The first layer typically searches for edges as is reflected in the notebook. The second layer should typically build on the first layers ouput and detect more complex shapes such as corners / curves etc. I have a hard time seeing this in the notebook however
+
+5.
+Simple RNN
+0.17399
+0.16477
+0.17405
+0.16889
+0.17121
+
+
+avg = 0.170582
+
+6.
+5 hidden units
+
+GRU
+0.03083
+0.03079
+0.03083
+
+LSTM
+0.01399
+0.01398
+0.01400
+
+7.
+0.10568
+
+The network does a better job of approximating the rise of the triangles compared to the fall. The match at the start of the triangles are shaper than the falls.
+
+The green node has it's highest peak before a rectangle input appears. Similarily it has it's lowest point approximately when the rectangle function ends.
+
+The blue node seems to have a similar shape as the green node but with less volatility.
+
+I can't figure out what the orange node does. In the end, the orange node is the only output that is less than zero which is cruitial to approximate the function to 0 since only positive weights are allowed in the output layer.
+
+8.
+I've never done C++ but it sure looks like code
+
+9.
+A really high temperature value produces random characters. It doesn't look like C++ code anymore, just jibberish.
+
+A very low temperature value i.e. 0.02 produces short output.
+
+When the temperature is set to 0.8 the formating of the code produced looks fairly nice to me.
